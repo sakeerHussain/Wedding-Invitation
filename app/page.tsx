@@ -79,16 +79,11 @@ export default function Home() {
         >
           <div className="hero__fixed">
             <div className="paper-noise" />
-            <div className="arch-floral arch-floral--left" aria-hidden="true">
-              <i className="stem stem--one" /><i className="stem stem--two" />
-              <b className="flower flower--one" /><b className="flower flower--two" /><b className="flower flower--three" />
-              <em className="leaf leaf--one" /><em className="leaf leaf--two" /><em className="leaf leaf--three" /><em className="leaf leaf--four" />
-            </div>
-            <div className="arch-floral arch-floral--right" aria-hidden="true">
-              <i className="stem stem--one" /><i className="stem stem--two" />
-              <b className="flower flower--one" /><b className="flower flower--two" /><b className="flower flower--three" />
-              <em className="leaf leaf--one" /><em className="leaf leaf--two" /><em className="leaf leaf--three" /><em className="leaf leaf--four" />
-            </div>
+            <img
+              className="hero-art"
+              src="/hero-watercolor-v2.png"
+              alt="Watercolour Islamic garden scene framed by ivory and blush flowers, with a newlywed couple seen from behind"
+            />
 
             <div className="arch">
               <div className="arch__inner">
@@ -104,7 +99,6 @@ export default function Home() {
                 <span className="verse-ref">Qur’an 30:21</span>
               </div>
             </div>
-            <img className="couple" src="/couple-rear-view.png" alt="Watercolour illustration of a Muslim bride and groom viewed from behind" />
             <div className="scroll-cue"><span>Discover our celebration</span><i>↓</i></div>
           </div>
         </section>
