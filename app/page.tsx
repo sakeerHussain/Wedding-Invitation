@@ -75,7 +75,12 @@ export default function Home() {
         <section
           ref={heroRef}
           className="hero"
-          style={{ "--scroll-blur": `${blur * 10}px`, "--scroll-fade": `${1 - blur * 0.34}` } as React.CSSProperties}
+          style={{
+            "--scroll-blur": `${blur * 8}px`,
+            "--content-opacity": `${Math.max(0, 1 - blur * 1.8)}`,
+            "--content-shift": `${blur * -42}px`,
+            "--art-scale": `${1 + blur * 0.035}`,
+          } as React.CSSProperties}
         >
           <div className="hero__fixed">
             <div className="paper-noise" />
