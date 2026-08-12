@@ -145,9 +145,9 @@ export default function Home() {
               />
               <Image
                 className="hero-art hero-art--mobile"
-                src="/hero-watercolor-mobile-v1.webp"
-                width={821}
-                height={1915}
+                src="/hero-watercolor-mobile-v2.webp"
+                width={848}
+                height={1855}
                 sizes="100vw"
                 priority
                 alt=""

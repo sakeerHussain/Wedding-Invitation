@@ -222,6 +222,12 @@ footer { margin:0 calc(0px - var(--details-gutter));padding:7rem 2rem 5rem;text-
   }
   .arch{
     top:env(safe-area-inset-top);
+    width:64vw;
+    height:70dvh;
+  }
+  .arch__inner{
+    padding-top:clamp(8rem,20dvh,11rem);
+    padding-inline:0;
   }
 }
 @media(hover:none){.event-card:hover{transform:none;box-shadow:0 22px 50px #6e5a3e12}}
