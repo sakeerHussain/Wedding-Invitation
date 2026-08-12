@@ -67,8 +67,8 @@ button:focus-visible,a:focus-visible,[tabindex="-1"]:focus-visible { outline:3px
 .bismillah { margin:0 0 .9rem; font:500 clamp(1.2rem,2.4vw,1.8rem) "Noto Naskh Arabic",serif; color:#9b742f; text-shadow:0 1px #fff8e9; }
 .card-family-line { margin:0; color:#5d4936; font:600 clamp(.65rem,1.1vw,.78rem)/1.4 "Cormorant Garamond",serif; letter-spacing:.14em; text-transform:uppercase; }
 .couple-names-focus { outline:none; }
-.couple-names { margin:.65rem 0 .45rem; display:flex; flex-direction:column; align-items:center; font:400 clamp(3.8rem,8.5vh,6.6rem)/.62 "Great Vibes","Cormorant Garamond",serif; color:#a47b31; letter-spacing:0; text-shadow:0 2px 1px #fff8e8,0 6px 18px #795d2420; }
-.couple-names small { min-width:9rem; margin:.2em 0 .18em; display:flex; align-items:center; justify-content:center; gap:.55rem; color:#a47b31; font:400 .3em/1 "Cormorant Garamond",serif; }
+.couple-names { margin:.75rem 0 .6rem; display:flex; flex-direction:column; align-items:center; row-gap:clamp(.35rem,.7vh,.5rem); font:400 clamp(3.8rem,8.5vh,6.6rem)/.72 "Great Vibes","Cormorant Garamond",serif; color:#a47b31; letter-spacing:0; text-shadow:0 2px 1px #fff8e8,0 6px 18px #795d2420; }
+.couple-names small { min-width:9rem; margin:0; display:flex; align-items:center; justify-content:center; gap:.65rem; color:#a47b31; font:400 .3em/1 "Cormorant Garamond",serif; }
 .couple-names small i { font-style:normal; transform:rotate(20deg); }.couple-names small i:last-child { transform:scaleX(-1) rotate(20deg); }.couple-names small b { font-weight:400;font-style:italic; }
 .invitation-copy { margin:.55rem 0 .45rem; font:500 clamp(.9rem,1.55vw,1.08rem)/1.45 "Cormorant Garamond",serif; color:#5e4b3d; letter-spacing:.015em; }
 .card-divider { width:min(9rem,55%); display:flex; align-items:center; gap:.5rem; margin:.35rem auto; color:#a67b2c; }.card-divider:before,.card-divider:after { content:""; height:1px; flex:1; background:linear-gradient(90deg,transparent,#b58a3c); }.card-divider:after { background:linear-gradient(90deg,#b58a3c,transparent); }.card-divider span { font-size:.55rem; }
@@ -110,9 +110,9 @@ footer { margin:0 calc(0px - var(--details-gutter));padding:7rem 2rem 5rem;text-
   .floral-piece--1{box-shadow:none}
   .bismillah{margin-bottom:.42rem;font-size:clamp(.88rem,3.8vw,1.05rem)}
   .card-family-line{font-size:clamp(.52rem,2.25vw,.64rem);letter-spacing:.11em}
-  .couple-names{margin:.42rem 0 .28rem;font-size:clamp(3.25rem,14vw,4.65rem);line-height:.6}
-  .couple-names small{min-width:7rem;margin:.16em 0}
-  .invitation-copy{margin:.38rem 0 .28rem;font-size:clamp(.78rem,3.5vw,.94rem);line-height:1.32}
+  .couple-names{margin:.55rem 0 .45rem;row-gap:clamp(.3rem,1dvh,.45rem);font-size:clamp(3.25rem,14vw,4.65rem);line-height:.72}
+  .couple-names small{min-width:7rem;margin:0;gap:.55rem}
+  .invitation-copy{margin:.45rem 0 .35rem;font-size:clamp(.78rem,3.5vw,.94rem);line-height:1.38}
   .card-divider{margin:.24rem auto}
   .invitation-facts{width:96%;gap:.12rem;margin-top:.05rem}
   .invitation-meta-row{grid-template-columns:1.7rem minmax(0,1fr);gap:.42rem;padding:.16rem 0}
@@ -272,6 +272,10 @@ footer { margin:0 calc(0px - var(--details-gutter));padding:7rem 2rem 5rem;text-
     padding-top:clamp(6.5rem,16dvh,9rem);
     padding-inline:0;
   }
+}
+@media(max-width:800px) and (orientation:portrait) and (max-height:650px){
+  .arch{height:94dvh}
+  .arch__inner{padding-top:clamp(4.25rem,12dvh,5rem)}
 }
 @media(hover:none){.event-card:hover{transform:none;box-shadow:0 22px 50px #6e5a3e12}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}.hero{height:auto}.hero__fixed{position:relative}.hero-art-stage{filter:none!important;opacity:1!important;transform:none!important}.arch{opacity:1!important;transform:none!important}.arch__inner>*:not(.card-secondary){opacity:1!important;transform:none!important;filter:none!important}.invitation--celebrating .card-secondary{opacity:1!important;transform:none!important;filter:none!important}.floral-shower{display:none}.details{margin-top:0}.reveal{opacity:1;transform:none}}

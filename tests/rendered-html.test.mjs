@@ -71,6 +71,8 @@ test("keeps invitation content centralized and accessible", async () => {
   assert.match(css, /\.invitation--celebrating \.card-secondary/);
   assert.match(css, /Great Vibes/);
   assert.match(css, /\.invitation-meta-row/);
+  assert.match(css, /\.couple-names[^}]*row-gap:clamp\(\.35rem,\.7vh,\.5rem\)[^}]*\/\.72/);
+  assert.match(css, /max-height:650px[^}]*\.arch\{height:94dvh\}/);
   assert.match(css, /max-aspect-ratio:2\/3/);
   assert.match(css, /\.hero-art-stage\{place-items:start center/);
   assert.match(css, /safe-area-inset-top/);
