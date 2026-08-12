@@ -125,16 +125,25 @@ export default function Home() {
         <section ref={heroRef} className="hero">
           <div className="hero__fixed">
             <div className="paper-noise" />
-            <Image
-              className="hero-art"
-              src="/hero-watercolor-v2.png"
-              width={1024}
-              height={1536}
-              sizes="100vw"
-              priority
-              alt=""
-              aria-hidden="true"
-            />
+            <div className="hero-art-stage" aria-hidden="true">
+              <Image
+                className="hero-art-backdrop"
+                src="/hero-watercolor-backdrop.webp"
+                fill
+                sizes="100vw"
+                unoptimized
+                alt=""
+              />
+              <Image
+                className="hero-art"
+                src="/hero-watercolor-v3.webp"
+                width={1024}
+                height={1536}
+                sizes="(max-aspect-ratio: 2/3) 100vw, 67vh"
+                priority
+                alt=""
+              />
+            </div>
             <div className="arch">
               <div className="arch__inner">
                 <p className="bismillah" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</p>

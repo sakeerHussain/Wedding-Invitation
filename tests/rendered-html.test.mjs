@@ -27,10 +27,11 @@ test("renders the wedding invitation shell and metadata", async () => {
 });
 
 test("keeps invitation content centralized and accessible", async () => {
-  const [page, data, layout] = await Promise.all([
+  const [page, data, layout, css] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/invitation-data.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/layout.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
   ]);
   assert.match(page, /lang="ar" dir="rtl"/);
   assert.match(page, /<time dateTime=/);
@@ -38,4 +39,7 @@ test("keeps invitation content centralized and accessible", async () => {
   assert.match(page, /Add to calendar/);
   assert.match(data, /export const invitationData/);
   assert.match(layout, /1536, height: 1024/);
+  assert.match(page, /hero-watercolor-backdrop\.webp/);
+  assert.match(css, /\.hero-art[^}]*object-fit:contain/);
+  assert.doesNotMatch(css, /\.hero-art\s*\{[^}]*object-fit:cover/);
 });

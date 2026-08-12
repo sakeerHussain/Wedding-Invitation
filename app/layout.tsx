@@ -37,7 +37,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <head>
-        <link rel="preload" as="image" href="/hero-watercolor-v2.png" fetchPriority="high" />
+        <link rel="preload" as="image" href="/hero-watercolor-v3.webp" fetchPriority="high" />
       </head>
       <body>{children}</body>
     </html>
