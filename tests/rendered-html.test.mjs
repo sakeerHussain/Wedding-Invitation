@@ -42,6 +42,8 @@ test("keeps invitation content centralized and accessible", async () => {
   assert.match(page, /Reveal the wedding details and continue/);
   assert.doesNotMatch(page, /Tap the card to reveal the celebration/);
   assert.match(page, /floralShowerPieces/);
+  assert.match(page, /getAnimations\(\{ subtree: true \}\)/);
+  assert.match(page, /Math\.sin\(journeyProgress \* Math\.PI\)/);
   assert.match(data, /export const invitationData/);
   assert.match(layout, /1536, height: 1024/);
   assert.match(page, /hero-watercolor-backdrop\.webp/);
@@ -53,6 +55,7 @@ test("keeps invitation content centralized and accessible", async () => {
   assert.match(css, /\.arch__inner\{[^}]*padding-top:clamp\(8rem,20dvh,11rem\)/);
   assert.match(css, /width:76vw;[^}]*height:72dvh;[^}]*translate:-50% 0/);
   assert.match(css, /@keyframes floralFall/);
+  assert.match(css, /infinite both/);
   assert.match(css, /\.invitation--celebrating \.card-secondary/);
   assert.match(css, /max-aspect-ratio:2\/3/);
   assert.match(css, /\.hero-art-stage\{place-items:start center/);

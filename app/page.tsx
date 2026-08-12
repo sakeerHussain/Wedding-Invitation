@@ -4,14 +4,18 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Image from "next/image";
 import { invitationData, venueLabel, venueMapUrl, type WeddingEvent } from "./invitation-data";
 
-const floralShowerPieces = Array.from({ length: 30 }, (_, index) => ({
-  x: (index * 37 + 7) % 100,
-  delay: (index % 10) * 0.11,
-  duration: 3.4 + (index % 6) * 0.32,
-  drift: (index % 2 === 0 ? 1 : -1) * (18 + (index % 5) * 9),
-  rotation: (index * 47) % 180,
-  kind: index % 3,
-}));
+const floralShowerPieces = Array.from({ length: 30 }, (_, index) => {
+  const kind = index % 3;
+  const baseDuration = kind === 0 ? 7.2 : kind === 1 ? 5.4 : 6.3;
+  return {
+    x: (index * 37 + 7) % 100,
+    delay: -((index * 0.47) % 6.5),
+    duration: baseDuration + (index % 4) * 0.38,
+    drift: (index % 2 === 0 ? 1 : -1) * (18 + (index % 5) * 9),
+    rotation: (index * 47) % 180,
+    kind,
+  };
+});
 
 function downloadCalendar(event: WeddingEvent) {
   const lines = [
@@ -41,20 +45,14 @@ function downloadCalendar(event: WeddingEvent) {
 export default function Home() {
   const [opened, setOpened] = useState(false);
   const [detailsRevealed, setDetailsRevealed] = useState(false);
-  const [showerActive, setShowerActive] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const showerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.body.classList.toggle("invitation-locked", !opened || !detailsRevealed);
     return () => document.body.classList.remove("invitation-locked");
   }, [opened, detailsRevealed]);
-
-  useEffect(() => {
-    if (!showerActive) return;
-    const timer = window.setTimeout(() => setShowerActive(false), 5200);
-    return () => window.clearTimeout(timer);
-  }, [showerActive]);
 
   useEffect(() => {
     if (!detailsRevealed) return;
@@ -69,6 +67,12 @@ export default function Home() {
       hero.style.setProperty("--content-shift", `${progress * -42}px`);
       hero.style.setProperty("--art-scale", `${1 + progress * 0.035}`);
       hero.style.setProperty("--art-opacity", `${1 - progress * 0.78}`);
+      const scrollRange = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const journeyProgress = Math.min(1, Math.max(0, window.scrollY / scrollRange));
+      const showerRate = 0.82 + Math.sin(journeyProgress * Math.PI) * 0.56;
+      showerRef.current?.getAnimations({ subtree: true }).forEach((animation) => {
+        animation.playbackRate = showerRate;
+      });
       frame = 0;
     };
     const update = () => {
@@ -109,7 +113,6 @@ export default function Home() {
 
   const revealCelebration = () => {
     setDetailsRevealed(true);
-    setShowerActive(true);
   };
 
   const { couple, events, venue } = invitationData;
@@ -149,8 +152,8 @@ export default function Home() {
         </button>
       </section>
 
-      {showerActive && (
-        <div className="floral-shower" aria-hidden="true">
+      {detailsRevealed && (
+        <div ref={showerRef} className="floral-shower" aria-hidden="true">
           {floralShowerPieces.map((piece, index) => (
             <span
               className={`floral-piece floral-piece--${piece.kind}`}
