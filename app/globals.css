@@ -221,9 +221,12 @@ footer { margin:0 calc(0px - var(--details-gutter));padding:7rem 2rem 5rem;text-
     box-shadow:none;
   }
   .arch{
+    position:absolute;
     top:env(safe-area-inset-top);
-    width:64vw;
-    height:70dvh;
+    left:50%;
+    width:76vw;
+    height:72dvh;
+    translate:-50% 0;
   }
   .arch__inner{
     padding-top:clamp(8rem,20dvh,11rem);
