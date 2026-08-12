@@ -38,6 +38,9 @@ test("keeps invitation content centralized and accessible", async () => {
   assert.match(page, /<address>/);
   assert.match(page, /Add to calendar/);
   assert.doesNotMatch(page, /Discover our celebration|scroll-cue/);
+  assert.match(page, /detailsRevealed/);
+  assert.match(page, /Reveal the wedding details and continue/);
+  assert.match(page, /floralShowerPieces/);
   assert.match(data, /export const invitationData/);
   assert.match(layout, /1536, height: 1024/);
   assert.match(page, /hero-watercolor-backdrop\.webp/);
@@ -48,6 +51,8 @@ test("keeps invitation content centralized and accessible", async () => {
   assert.match(css, /orientation:portrait[^}]*max-width:1024px/);
   assert.match(css, /\.arch__inner\{[^}]*padding-top:clamp\(8rem,20dvh,11rem\)/);
   assert.match(css, /width:76vw;[^}]*height:72dvh;[^}]*translate:-50% 0/);
+  assert.match(css, /@keyframes floralFall/);
+  assert.match(css, /\.invitation--celebrating \.card-secondary/);
   assert.match(css, /max-aspect-ratio:2\/3/);
   assert.match(css, /\.hero-art-stage\{place-items:start center/);
   assert.match(css, /safe-area-inset-top/);

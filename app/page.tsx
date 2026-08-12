@@ -1,8 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Image from "next/image";
 import { invitationData, venueLabel, venueMapUrl, type WeddingEvent } from "./invitation-data";
+
+const floralShowerPieces = Array.from({ length: 30 }, (_, index) => ({
+  x: (index * 37 + 7) % 100,
+  delay: (index % 10) * 0.11,
+  duration: 3.4 + (index % 6) * 0.32,
+  drift: (index % 2 === 0 ? 1 : -1) * (18 + (index % 5) * 9),
+  rotation: (index * 47) % 180,
+  kind: index % 3,
+}));
 
 function downloadCalendar(event: WeddingEvent) {
   const lines = [
@@ -31,16 +40,24 @@ function downloadCalendar(event: WeddingEvent) {
 
 export default function Home() {
   const [opened, setOpened] = useState(false);
+  const [detailsRevealed, setDetailsRevealed] = useState(false);
+  const [showerActive, setShowerActive] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
 
   useEffect(() => {
-    document.body.classList.toggle("invitation-locked", !opened);
+    document.body.classList.toggle("invitation-locked", !opened || !detailsRevealed);
     return () => document.body.classList.remove("invitation-locked");
-  }, [opened]);
+  }, [opened, detailsRevealed]);
 
   useEffect(() => {
-    if (!opened) return;
+    if (!showerActive) return;
+    const timer = window.setTimeout(() => setShowerActive(false), 5200);
+    return () => window.clearTimeout(timer);
+  }, [showerActive]);
+
+  useEffect(() => {
+    if (!detailsRevealed) return;
     const hero = heroRef.current;
     if (!hero) return;
     let frame = 0;
@@ -65,10 +82,10 @@ export default function Home() {
       window.removeEventListener("resize", update);
       if (frame) window.cancelAnimationFrame(frame);
     };
-  }, [opened]);
+  }, [detailsRevealed]);
 
   useEffect(() => {
-    if (!opened) return;
+    if (!detailsRevealed) return;
     const items = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       items.forEach((item) => item.classList.add("is-visible"));
@@ -80,7 +97,7 @@ export default function Home() {
     );
     items.forEach((item) => observer.observe(item));
     return () => observer.disconnect();
-  }, [opened]);
+  }, [detailsRevealed]);
 
   const openInvitation = () => {
     setOpened(true);
@@ -90,10 +107,21 @@ export default function Home() {
     }, 900);
   };
 
+  const revealCelebration = () => {
+    setDetailsRevealed(true);
+    setShowerActive(true);
+  };
+
   const { couple, events, venue } = invitationData;
 
+  const invitationClassName = [
+    "invitation",
+    opened && "invitation--open",
+    detailsRevealed && "invitation--celebrating",
+  ].filter(Boolean).join(" ");
+
   return (
-    <main className={opened ? "invitation invitation--open" : "invitation"}>
+    <main className={invitationClassName}>
       <section className="envelope-scene" aria-hidden={opened} aria-label="Wedding invitation envelope">
         <div className="ambient ambient--one" />
         <div className="ambient ambient--two" />
@@ -120,6 +148,24 @@ export default function Home() {
           <i aria-hidden="true">↓</i>
         </button>
       </section>
+
+      {showerActive && (
+        <div className="floral-shower" aria-hidden="true">
+          {floralShowerPieces.map((piece, index) => (
+            <span
+              className={`floral-piece floral-piece--${piece.kind}`}
+              key={index}
+              style={{
+                "--piece-x": `${piece.x}vw`,
+                "--piece-delay": `${piece.delay}s`,
+                "--piece-duration": `${piece.duration}s`,
+                "--piece-drift": `${piece.drift}vw`,
+                "--piece-rotation": `${piece.rotation}deg`,
+              } as CSSProperties}
+            />
+          ))}
+        </div>
+      )}
 
       <div className="invitation-content" aria-hidden={!opened}>
         <section ref={heroRef} className="hero">
@@ -160,17 +206,23 @@ export default function Home() {
                 <div className="ornament" aria-hidden="true"><span>✦</span></div>
                 <h1 ref={headingRef} tabIndex={-1}><span>{couple.bride}</span><small>&amp;</small><span>{couple.groom}</span></h1>
                 <p className="invitation-copy">request the honour of your presence<br />as they begin their forever</p>
-                <div className="date-lockup">
+                <div className="date-lockup card-secondary">
                   <span>{events[0].day}</span><strong>{invitationData.ceremonyDate}</strong><span>{invitationData.ceremonyTime}</span>
                 </div>
-                <p className="verse">“{invitationData.verse}”</p>
-                <span className="verse-ref">{invitationData.verseReference}</span>
+                <p className="verse card-secondary">“{invitationData.verse}”</p>
+                <span className="verse-ref card-secondary">{invitationData.verseReference}</span>
               </div>
             </div>
+            {opened && !detailsRevealed && (
+              <button className="card-reveal-action" onClick={revealCelebration} aria-label="Reveal the wedding details and continue">
+                <span>Tap the card to reveal the celebration</span>
+                <i aria-hidden="true">✦</i>
+              </button>
+            )}
           </div>
         </section>
 
-        <section className="details" aria-label="Wedding celebration details">
+        <section className="details" aria-label="Wedding celebration details" aria-hidden={!detailsRevealed}>
           <div className="details__intro reveal">
             <p className="eyebrow">With gratitude to Allah</p>
             <h2>Our joyful<br /><em>beginning</em></h2>
