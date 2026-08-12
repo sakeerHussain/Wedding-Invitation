@@ -41,8 +41,11 @@ test("keeps invitation content centralized and accessible", async () => {
   assert.match(data, /export const invitationData/);
   assert.match(layout, /1536, height: 1024/);
   assert.match(page, /hero-watercolor-backdrop\.webp/);
+  assert.match(page, /hero-watercolor-mobile-v1\.webp/);
   assert.match(css, /\.hero-art[^}]*object-fit:contain/);
   assert.doesNotMatch(css, /\.hero-art\s*\{[^}]*object-fit:cover/);
+  assert.match(css, /\.hero-art\.hero-art--mobile\{[^}]*height:100dvh!important;[^}]*object-fit:cover/);
+  assert.match(css, /orientation:portrait[^}]*max-width:1024px/);
   assert.match(css, /max-aspect-ratio:2\/3/);
   assert.match(css, /\.hero-art-stage\{place-items:start center/);
   assert.match(css, /safe-area-inset-top/);

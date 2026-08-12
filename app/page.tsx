@@ -135,11 +135,20 @@ export default function Home() {
                 alt=""
               />
               <Image
-                className="hero-art"
+                className="hero-art hero-art--desktop"
                 src="/hero-watercolor-v3.webp"
                 width={1024}
                 height={1536}
                 sizes="(max-aspect-ratio: 2/3) 100vw, 67vh"
+                priority
+                alt=""
+              />
+              <Image
+                className="hero-art hero-art--mobile"
+                src="/hero-watercolor-mobile-v1.webp"
+                width={821}
+                height={1915}
+                sizes="100vw"
                 priority
                 alt=""
               />

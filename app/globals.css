@@ -43,6 +43,7 @@ button:focus-visible,a:focus-visible,[tabindex="-1"]:focus-visible { outline:3px
 .hero-art-stage:after { content:""; position:absolute; z-index:1; inset:0; pointer-events:none; background:linear-gradient(90deg,#f5ecdf45,#fff0 24%,#fff0 76%,#f5ecdf45); }
 .hero-art-backdrop { z-index:0; width:100%!important; height:100%!important; object-fit:cover; transform:scale(1.08); filter:saturate(.72); opacity:.42; }
 .hero-art { position:relative!important; z-index:2; width:min(100vw,66.667dvh)!important; height:min(100dvh,150vw)!important; max-width:none!important; object-fit:contain; object-position:center; box-shadow:0 0 48px #725c3d24; }
+.hero-art--mobile { display:none; }
 .arch { position:relative; z-index:2; width:min(82vw,54.667dvh); height:min(82dvh,123vw); padding:0; opacity:var(--content-opacity); transform:translateY(var(--content-shift)); transition:opacity .05s linear,transform .05s linear; }
 .arch:before,.arch:after { display:none; }
 .arch__inner { position:relative; z-index:2; height:100%; display:flex; flex-direction:column; align-items:center; text-align:center; padding:calc(min(100dvh,150vw) * .15) 1rem 1rem; }
@@ -196,6 +197,32 @@ footer { margin:0 calc(0px - var(--details-gutter));padding:7rem 2rem 5rem;text-
   .date-lockup span:last-child{text-align:left}
   .date-lockup strong{padding-inline:.45rem;white-space:nowrap}
   .venue-card__symbol{font-size:1.7rem}
+}
+@media(orientation:portrait) and (max-width:1024px){
+  .hero__fixed{
+    min-height:100svh;
+    height:100dvh;
+    background:#faf4e8;
+  }
+  .hero-art-stage{
+    place-items:stretch;
+    padding-top:0;
+    background:#faf4e8;
+  }
+  .hero-art-stage:after{display:none}
+  .hero-art-backdrop,.hero-art--desktop{display:none}
+  .hero-art.hero-art--mobile{
+    display:block;
+    width:100vw!important;
+    height:100dvh!important;
+    max-height:none!important;
+    object-fit:cover;
+    object-position:center top;
+    box-shadow:none;
+  }
+  .arch{
+    top:env(safe-area-inset-top);
+  }
 }
 @media(hover:none){.event-card:hover{transform:none;box-shadow:0 22px 50px #6e5a3e12}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}.hero{height:auto}.hero__fixed{position:relative}.hero-art-stage{filter:none!important;opacity:1!important;transform:none!important}.arch{opacity:1!important;transform:none!important}.details{margin-top:0}.reveal{opacity:1;transform:none}}
