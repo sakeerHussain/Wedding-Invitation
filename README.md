@@ -94,6 +94,17 @@ actions tied to the current ChatGPT user. Leave public content anonymous.
 - `npm test`: build the starter and verify its rendered loading skeleton
 - `npm run db:generate`: generate Drizzle migrations after schema changes
 
+## Deployment targets
+
+The project supports two explicit deployment targets:
+
+- OpenAI Sites / Cloudflare Workers: `npm run build`
+- Vercel / standard Next.js: `npm run build:vercel`
+
+`vercel.json` selects the Next.js framework and Vercel-specific build command
+automatically. In Vercel, keep the project root at the repository root and do
+not configure an output directory.
+
 ## Learn More
 
 - [vinext Documentation](https://github.com/cloudflare/vinext)

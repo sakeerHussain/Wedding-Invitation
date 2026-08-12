@@ -50,3 +50,16 @@ test("keeps invitation content centralized and accessible", async () => {
   assert.match(css, /safe-area-inset-bottom/);
   assert.match(css, /grid-template-columns:minmax\(0,1fr\)/);
 });
+
+test("declares an explicit Vercel deployment target", async () => {
+  const [vercel, packageJson] = await Promise.all([
+    readFile(new URL("../vercel.json", import.meta.url), "utf8"),
+    readFile(new URL("../package.json", import.meta.url), "utf8"),
+  ]);
+  const config = JSON.parse(vercel);
+  const packageData = JSON.parse(packageJson);
+  assert.equal(config.framework, "nextjs");
+  assert.equal(config.buildCommand, "npm run build:vercel");
+  assert.equal(packageData.scripts["build:vercel"], "next build");
+  assert.match(packageData.dependencies.next, /^\^?16\./);
+});
