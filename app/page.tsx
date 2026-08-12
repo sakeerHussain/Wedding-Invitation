@@ -48,6 +48,8 @@ export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const showerRef = useRef<HTMLDivElement>(null);
+  const showerAnimationsRef = useRef<Animation[]>([]);
+  const showerPhaseRef = useRef(-1);
 
   useEffect(() => {
     document.body.classList.toggle("invitation-locked", !opened || !detailsRevealed);
@@ -69,10 +71,15 @@ export default function Home() {
       hero.style.setProperty("--art-opacity", `${1 - progress * 0.78}`);
       const scrollRange = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       const journeyProgress = Math.min(1, Math.max(0, window.scrollY / scrollRange));
-      const showerRate = 0.82 + Math.sin(journeyProgress * Math.PI) * 0.56;
-      showerRef.current?.getAnimations({ subtree: true }).forEach((animation) => {
-        animation.playbackRate = showerRate;
-      });
+      const showerPhase = journeyProgress < 0.18 ? 0 : journeyProgress < 0.78 ? 1 : 2;
+      if (showerPhase !== showerPhaseRef.current) {
+        if (showerAnimationsRef.current.length === 0) {
+          showerAnimationsRef.current = showerRef.current?.getAnimations({ subtree: true }) ?? [];
+        }
+        const showerRate = [0.82, 1.24, 0.9][showerPhase];
+        showerAnimationsRef.current.forEach((animation) => { animation.playbackRate = showerRate; });
+        showerPhaseRef.current = showerPhase;
+      }
       frame = 0;
     };
     const update = () => {
@@ -85,6 +92,8 @@ export default function Home() {
       window.removeEventListener("scroll", update);
       window.removeEventListener("resize", update);
       if (frame) window.cancelAnimationFrame(frame);
+      showerAnimationsRef.current = [];
+      showerPhaseRef.current = -1;
     };
   }, [detailsRevealed]);
 

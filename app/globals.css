@@ -61,7 +61,7 @@ button:focus-visible,a:focus-visible,[tabindex="-1"]:focus-visible { outline:3px
 .invitation--celebrating .verse-ref { animation-delay:.36s; }
 .card-reveal-action { position:absolute; z-index:8; inset:0; padding:0; border:0; background:transparent; cursor:pointer; }
 .floral-shower { position:fixed; z-index:30; inset:0; overflow:hidden; pointer-events:none; contain:layout style paint; }
-.floral-piece { --piece-x:50vw; --piece-delay:0s; --piece-duration:6s; --piece-drift:20vw; --piece-rotation:0deg; position:absolute; top:-9vh; left:var(--piece-x); width:12px; height:20px; opacity:0; transform-origin:50% 20%; will-change:transform,opacity; animation:floralFall var(--piece-duration) cubic-bezier(.22,.55,.38,.9) var(--piece-delay) infinite both; }
+.floral-piece { --piece-x:50vw; --piece-delay:0s; --piece-duration:6s; --piece-drift:20vw; --piece-rotation:0deg; position:absolute; top:-9vh; left:var(--piece-x); width:12px; height:20px; opacity:0; transform-origin:50% 20%; will-change:transform,opacity; backface-visibility:hidden; animation:floralFall var(--piece-duration) linear var(--piece-delay) infinite both; }
 .floral-piece--0 { border-radius:90% 10% 90% 10%; background:linear-gradient(145deg,#73806b,#aab49d); box-shadow:inset 1px 0 #f4ead8a0; }
 .floral-piece--1 { width:13px; height:13px; border-radius:70% 30% 65% 35%; background:linear-gradient(145deg,#e8c2b8,#f6ddd5); box-shadow:0 0 0 2px #fff7ed70; }
 .floral-piece--2 { width:10px; height:17px; border-radius:100% 0 100% 0; background:linear-gradient(145deg,#d9ba7b,#f0d9a8); }
@@ -100,6 +100,9 @@ footer { margin:0 calc(0px - var(--details-gutter));padding:7rem 2rem 5rem;text-
 @media(max-width:420px){.open-hint{margin-top:2.2rem}.bismillah{font-size:.9rem}.invitation-copy{line-height:1.35;margin:.9rem 0}.verse{display:none}.date-lockup{margin-top:.2rem}.details__intro h2{font-size:4rem}.venue-card__top{align-items:center}.venue-card__symbol{font-size:2rem}}
 
 @media(max-width:800px){
+  .hero-art-stage{filter:none;transition:opacity .05s linear}
+  .floral-piece:nth-child(n+19){display:none}
+  .floral-piece--1{box-shadow:none}
   .hero__fixed{
     min-height:100svh;
     height:100dvh;
