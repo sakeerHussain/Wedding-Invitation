@@ -158,7 +158,6 @@ export default function Home() {
                 <span className="verse-ref">{invitationData.verseReference}</span>
               </div>
             </div>
-            <div className="scroll-cue"><span>Discover our celebration</span><i aria-hidden="true">↓</i></div>
           </div>
         </section>
 

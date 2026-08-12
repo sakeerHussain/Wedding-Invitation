@@ -37,6 +37,7 @@ test("keeps invitation content centralized and accessible", async () => {
   assert.match(page, /<time dateTime=/);
   assert.match(page, /<address>/);
   assert.match(page, /Add to calendar/);
+  assert.doesNotMatch(page, /Discover our celebration|scroll-cue/);
   assert.match(data, /export const invitationData/);
   assert.match(layout, /1536, height: 1024/);
   assert.match(page, /hero-watercolor-backdrop\.webp/);

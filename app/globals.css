@@ -53,7 +53,6 @@ h1 small { margin:.24em 0; color:var(--gold); font-size:.32em; font-style:italic
 .invitation-copy { margin:2rem 0 1.4rem; font:italic 500 clamp(1rem,1.7vw,1.25rem)/1.6 "Cormorant Garamond",serif; color:#687269; }
 .date-lockup { display:flex; align-items:center; gap:1.1rem; color:var(--green); text-transform:uppercase; }.date-lockup strong { padding:0 1.1rem; border-left:1px solid #c1a36c;border-right:1px solid #c1a36c; font:500 clamp(1rem,2vw,1.3rem) "Cormorant Garamond",serif; letter-spacing:.14em; }.date-lockup span { font-size:.75rem; letter-spacing:.11em; }
 .verse { margin:2rem 0 .2rem; font:italic 500 .98rem "Cormorant Garamond",serif; color:#59645c; }.verse-ref { color:#8f6d35; font-size:.72rem; letter-spacing:.13em; text-transform:uppercase; }
-.scroll-cue { position:absolute; z-index:6; left:50%; bottom:2.8vh; transform:translateX(-50%); display:flex; gap:.8rem; align-items:center; color:#666b65; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; white-space:nowrap; opacity:var(--content-opacity); transition:opacity .05s linear; }.scroll-cue i { color:#8f6d35;font:normal 1rem serif;animation:bob 1.5s ease-in-out infinite;}
 
 .details { --details-gutter:max(5vw,1.5rem); position:relative; z-index:7; margin-top:-55vh; padding:11rem var(--details-gutter) 0; border-radius:48px 48px 0 0; background:linear-gradient(180deg,#f9f3e9c7 0,#faf6eee8 18rem,#f1e7daf5 100%); box-shadow:0 -28px 70px #67564226; overflow:hidden; }
 .details:before { content:""; position:absolute; z-index:1; width:480px; aspect-ratio:1; right:-260px; top:110px; border:1px solid #b38a4c45; border-radius:50%; box-shadow:0 0 0 28px #b38a4c12,0 0 0 55px #b38a4c0b; }
@@ -74,12 +73,11 @@ footer { margin:0 calc(0px - var(--details-gutter));padding:7rem 2rem 5rem;text-
 
 @keyframes envelopeIn{from{opacity:0;transform:translateY(35px) rotateX(6deg)}to{opacity:1;transform:none}}@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}@keyframes bob{50%{transform:translateY(6px)}}
 
-@media(max-width:800px){.envelope-wrap{width:90vw}.seal{width:68px}.envelope-eyebrow{margin-bottom:2rem;font-size:.7rem}.hero{height:155vh}.arch__inner{padding-inline:.5rem}.bismillah{margin-bottom:.8rem;font-size:1.05rem}.arch__inner>.eyebrow{font-size:.68rem;letter-spacing:.13em}.ornament{margin:.85rem 0}h1{font-size:clamp(3.7rem,17vw,5.5rem)}.invitation-copy{font-size:1rem;margin:1.15rem 0}.date-lockup{gap:.5rem}.date-lockup strong{font-size:1rem;padding:0 .55rem}.date-lockup span{font-size:.7rem}.verse{font-size:.88rem;margin-top:1.2rem}.verse-ref{font-size:.68rem}.scroll-cue{font-size:.68rem}.details{margin-top:-48vh;padding-top:7rem;border-radius:30px 30px 0 0}.details__intro{margin-bottom:4.5rem}.event-grid{grid-template-columns:1fr}.event-card{min-height:0;padding:4.5rem 1.5rem 3rem}.venue-card{padding:3.2rem 2rem}.dua-card{margin:5rem auto;padding:4rem .5rem}}
+@media(max-width:800px){.envelope-wrap{width:90vw}.seal{width:68px}.envelope-eyebrow{margin-bottom:2rem;font-size:.7rem}.hero{height:155vh}.arch__inner{padding-inline:.5rem}.bismillah{margin-bottom:.8rem;font-size:1.05rem}.arch__inner>.eyebrow{font-size:.68rem;letter-spacing:.13em}.ornament{margin:.85rem 0}h1{font-size:clamp(3.7rem,17vw,5.5rem)}.invitation-copy{font-size:1rem;margin:1.15rem 0}.date-lockup{gap:.5rem}.date-lockup strong{font-size:1rem;padding:0 .55rem}.date-lockup span{font-size:.7rem}.verse{font-size:.88rem;margin-top:1.2rem}.verse-ref{font-size:.68rem}.details{margin-top:-48vh;padding-top:7rem;border-radius:30px 30px 0 0}.details__intro{margin-bottom:4.5rem}.event-grid{grid-template-columns:1fr}.event-card{min-height:0;padding:4.5rem 1.5rem 3rem}.venue-card{padding:3.2rem 2rem}.dua-card{margin:5rem auto;padding:4rem .5rem}}
 @media(max-width:800px) and (max-aspect-ratio:2/3){.hero-art-stage{place-items:start center;padding-top:max(10px,env(safe-area-inset-top))}.arch{position:absolute;top:max(10px,env(safe-area-inset-top));left:50%;translate:-50% 0}}
 @media(max-width:420px){.open-hint{margin-top:2.2rem}.bismillah{font-size:.9rem}.invitation-copy{line-height:1.35;margin:.9rem 0}.verse{display:none}.date-lockup{margin-top:.2rem}.details__intro h2{font-size:4rem}.venue-card__top{align-items:center}.venue-card__symbol{font-size:2rem}}
 
 @media(max-width:800px){
-  .scroll-cue{display:none}
   .hero__fixed{
     min-height:100svh;
     height:100dvh;
@@ -200,4 +198,4 @@ footer { margin:0 calc(0px - var(--details-gutter));padding:7rem 2rem 5rem;text-
   .venue-card__symbol{font-size:1.7rem}
 }
 @media(hover:none){.event-card:hover{transform:none;box-shadow:0 22px 50px #6e5a3e12}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}.hero{height:auto}.hero__fixed{position:relative}.hero-art-stage{filter:none!important;opacity:1!important;transform:none!important}.arch,.scroll-cue{opacity:1!important;transform:none!important}.details{margin-top:0}.reveal{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}.hero{height:auto}.hero__fixed{position:relative}.hero-art-stage{filter:none!important;opacity:1!important;transform:none!important}.arch{opacity:1!important;transform:none!important}.details{margin-top:0}.reveal{opacity:1;transform:none}}
