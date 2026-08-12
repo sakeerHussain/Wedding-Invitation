@@ -29,8 +29,8 @@ export default function Home() {
   useEffect(() => {
     if (!opened) return;
     const update = () => {
-      const height = heroRef.current?.offsetHeight || window.innerHeight;
-      setBlur(Math.min(1, Math.max(0, window.scrollY / (height * 0.7))));
+      const transitionDistance = window.innerHeight * 0.92;
+      setBlur(Math.min(1, Math.max(0, window.scrollY / transitionDistance)));
     };
     update();
     window.addEventListener("scroll", update, { passive: true });
@@ -80,6 +80,7 @@ export default function Home() {
             "--content-opacity": `${Math.max(0, 1 - blur * 1.8)}`,
             "--content-shift": `${blur * -42}px`,
             "--art-scale": `${1 + blur * 0.035}`,
+            "--art-opacity": `${1 - blur * 0.78}`,
           } as React.CSSProperties}
         >
           <div className="hero__fixed">
