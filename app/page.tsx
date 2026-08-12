@@ -214,10 +214,7 @@ export default function Home() {
               </div>
             </div>
             {opened && !detailsRevealed && (
-              <button className="card-reveal-action" onClick={revealCelebration} aria-label="Reveal the wedding details and continue">
-                <span>Tap the card to reveal the celebration</span>
-                <i aria-hidden="true">✦</i>
-              </button>
+              <button className="card-reveal-action" onClick={revealCelebration} aria-label="Reveal the wedding details and continue" />
             )}
           </div>
         </section>

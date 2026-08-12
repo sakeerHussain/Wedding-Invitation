@@ -40,6 +40,7 @@ test("keeps invitation content centralized and accessible", async () => {
   assert.doesNotMatch(page, /Discover our celebration|scroll-cue/);
   assert.match(page, /detailsRevealed/);
   assert.match(page, /Reveal the wedding details and continue/);
+  assert.doesNotMatch(page, /Tap the card to reveal the celebration/);
   assert.match(page, /floralShowerPieces/);
   assert.match(data, /export const invitationData/);
   assert.match(layout, /1536, height: 1024/);
