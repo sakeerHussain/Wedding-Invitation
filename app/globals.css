@@ -79,6 +79,7 @@ footer { margin:0 calc(0px - var(--details-gutter));padding:7rem 2rem 5rem;text-
 @media(max-width:420px){.open-hint{margin-top:2.2rem}.bismillah{font-size:.9rem}.invitation-copy{line-height:1.35;margin:.9rem 0}.verse{display:none}.date-lockup{margin-top:.2rem}.details__intro h2{font-size:4rem}.venue-card__top{align-items:center}.venue-card__symbol{font-size:2rem}}
 
 @media(max-width:800px){
+  .scroll-cue{display:none}
   .hero__fixed{
     min-height:100svh;
     height:100dvh;
