@@ -1,50 +1,100 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { invitationData, venueLabel, venueMapUrl, type WeddingEvent } from "./invitation-data";
 
-const events = [
-  {
-    number: "01",
-    title: "Nikah",
-    day: "Saturday",
-    date: "14 November 2026",
-    time: "After Asr · 4:30 PM",
-    note: "Followed by dua and refreshments",
-  },
-  {
-    number: "02",
-    title: "Walima",
-    day: "Sunday",
-    date: "15 November 2026",
-    time: "7:00 PM onwards",
-    note: "Dinner will be served at 8:00 PM",
-  },
-];
+function downloadCalendar(event: WeddingEvent) {
+  const lines = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//Safa and Ayaan//Wedding Invitation//EN",
+    "CALSCALE:GREGORIAN",
+    "BEGIN:VEVENT",
+    `UID:${event.title.toLowerCase()}-safa-ayaan-2026@wedding-invitation`,
+    `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "")}`,
+    `DTSTART:${event.calendarStart}`,
+    `DTEND:${event.calendarEnd}`,
+    `SUMMARY:${event.title} — Safa & Ayaan`,
+    `LOCATION:${venueLabel.replace(/,/g, "\\,")}`,
+    `DESCRIPTION:${event.note}`,
+    "END:VEVENT",
+    "END:VCALENDAR",
+  ];
+  const url = URL.createObjectURL(new Blob([lines.join("\r\n")], { type: "text/calendar;charset=utf-8" }));
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `safa-ayaan-${event.title.toLowerCase()}.ics`;
+  link.click();
+  window.setTimeout(() => URL.revokeObjectURL(url), 500);
+}
 
 export default function Home() {
   const [opened, setOpened] = useState(false);
-  const [blur, setBlur] = useState(0);
   const heroRef = useRef<HTMLElement>(null);
+  const headingRef = useRef<HTMLHeadingElement>(null);
+
+  useEffect(() => {
+    document.body.classList.toggle("invitation-locked", !opened);
+    return () => document.body.classList.remove("invitation-locked");
+  }, [opened]);
 
   useEffect(() => {
     if (!opened) return;
-    const update = () => {
-      const transitionDistance = window.innerHeight * 0.92;
-      setBlur(Math.min(1, Math.max(0, window.scrollY / transitionDistance)));
+    const hero = heroRef.current;
+    if (!hero) return;
+    let frame = 0;
+
+    const paint = () => {
+      const progress = Math.min(1, Math.max(0, window.scrollY / (window.innerHeight * 0.92)));
+      hero.style.setProperty("--scroll-blur", `${progress * 8}px`);
+      hero.style.setProperty("--content-opacity", `${Math.max(0, 1 - progress * 1.8)}`);
+      hero.style.setProperty("--content-shift", `${progress * -42}px`);
+      hero.style.setProperty("--art-scale", `${1 + progress * 0.035}`);
+      hero.style.setProperty("--art-opacity", `${1 - progress * 0.78}`);
+      frame = 0;
     };
-    update();
+    const update = () => {
+      if (!frame) frame = window.requestAnimationFrame(paint);
+    };
+    paint();
     window.addEventListener("scroll", update, { passive: true });
-    return () => window.removeEventListener("scroll", update);
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, [opened]);
+
+  useEffect(() => {
+    if (!opened) return;
+    const items = Array.from(document.querySelectorAll<HTMLElement>(".reveal"));
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      items.forEach((item) => item.classList.add("is-visible"));
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add("is-visible")),
+      { threshold: 0.14, rootMargin: "0px 0px -8%" },
+    );
+    items.forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
   }, [opened]);
 
   const openInvitation = () => {
     setOpened(true);
-    window.setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 450);
+    window.setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      headingRef.current?.focus({ preventScroll: true });
+    }, 900);
   };
+
+  const { couple, events, venue } = invitationData;
 
   return (
     <main className={opened ? "invitation invitation--open" : "invitation"}>
-      <section className="envelope-scene" aria-hidden={opened}>
+      <section className="envelope-scene" aria-hidden={opened} aria-label="Wedding invitation envelope">
         <div className="ambient ambient--one" />
         <div className="ambient ambient--two" />
         <p className="eyebrow envelope-eyebrow">A celebration written by destiny</p>
@@ -53,15 +103,15 @@ export default function Home() {
           <div className="envelope">
             <div className="envelope__lining" />
             <div className="envelope__paper">
-              <span>بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</span>
-              <strong>S &amp; A</strong>
+              <span lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</span>
+              <strong>{couple.initials}</strong>
             </div>
             <div className="envelope__left" />
             <div className="envelope__right" />
             <div className="envelope__bottom" />
             <div className="envelope__flap" />
             <button className="seal" onClick={openInvitation} aria-label="Open the wedding invitation">
-              <span>SA</span>
+              <span>{couple.sealInitials}</span>
             </button>
           </div>
         </div>
@@ -72,85 +122,84 @@ export default function Home() {
       </section>
 
       <div className="invitation-content" aria-hidden={!opened}>
-        <section
-          ref={heroRef}
-          className="hero"
-          style={{
-            "--scroll-blur": `${blur * 8}px`,
-            "--content-opacity": `${Math.max(0, 1 - blur * 1.8)}`,
-            "--content-shift": `${blur * -42}px`,
-            "--art-scale": `${1 + blur * 0.035}`,
-            "--art-opacity": `${1 - blur * 0.78}`,
-          } as React.CSSProperties}
-        >
+        <section ref={heroRef} className="hero">
           <div className="hero__fixed">
             <div className="paper-noise" />
-            <img
+            <Image
               className="hero-art"
               src="/hero-watercolor-v2.png"
-              alt="Watercolour Islamic garden scene framed by ivory and blush flowers, with a newlywed couple seen from behind"
+              width={1024}
+              height={1536}
+              sizes="100vw"
+              priority
+              alt=""
+              aria-hidden="true"
             />
-
             <div className="arch">
               <div className="arch__inner">
-                <p className="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</p>
+                <p className="bismillah" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</p>
                 <p className="eyebrow">Together with their families</p>
-                <div className="ornament"><span>✦</span></div>
-                <h1><span>Safa</span><small>&amp;</small><span>Ayaan</span></h1>
+                <div className="ornament" aria-hidden="true"><span>✦</span></div>
+                <h1 ref={headingRef} tabIndex={-1}><span>{couple.bride}</span><small>&amp;</small><span>{couple.groom}</span></h1>
                 <p className="invitation-copy">request the honour of your presence<br />as they begin their forever</p>
                 <div className="date-lockup">
-                  <span>Saturday</span><strong>14 · 11 · 26</strong><span>4:30 PM</span>
+                  <span>{events[0].day}</span><strong>{invitationData.ceremonyDate}</strong><span>{invitationData.ceremonyTime}</span>
                 </div>
-                <p className="verse">“And He placed between you affection and mercy.”</p>
-                <span className="verse-ref">Qur’an 30:21</span>
+                <p className="verse">“{invitationData.verse}”</p>
+                <span className="verse-ref">{invitationData.verseReference}</span>
               </div>
             </div>
-            <div className="scroll-cue"><span>Discover our celebration</span><i>↓</i></div>
+            <div className="scroll-cue"><span>Discover our celebration</span><i aria-hidden="true">↓</i></div>
           </div>
         </section>
 
-        <section className="details">
+        <section className="details" aria-label="Wedding celebration details">
           <div className="details__intro reveal">
             <p className="eyebrow">With gratitude to Allah</p>
             <h2>Our joyful<br /><em>beginning</em></h2>
             <p>We warmly invite you to share in our happiness and bless our union with your presence and duas.</p>
           </div>
 
-          <div className="event-grid">
+          <div className="event-grid" id="events">
             {events.map((event) => (
-              <article className="event-card" key={event.title}>
-                <span className="event-card__number">{event.number}</span>
-                <div className="event-card__mark">✦</div>
+              <article className="event-card reveal" key={event.title}>
+                <span className="event-card__number" aria-hidden="true">{event.number}</span>
+                <div className="event-card__mark" aria-hidden="true">✦</div>
                 <p>{event.day}</p>
                 <h3>{event.title}</h3>
-                <div className="event-card__rule" />
-                <strong>{event.date}</strong>
+                <div className="event-card__rule" aria-hidden="true" />
+                <time dateTime={event.dateTime}>{event.date}</time>
                 <span>{event.time}</span>
                 <small>{event.note}</small>
+                <button className="card-action" onClick={() => downloadCalendar(event)}>
+                  Add to calendar <span aria-hidden="true">＋</span>
+                </button>
               </article>
             ))}
           </div>
 
-          <article className="venue-card">
+          <article className="venue-card reveal" id="venue">
             <div className="venue-card__top">
               <div>
                 <p className="eyebrow">The venue</p>
-                <h3>Noor Palace</h3>
+                <h3>{venue.name}</h3>
               </div>
               <span className="venue-card__symbol" aria-hidden="true">⌖</span>
             </div>
-            <p>Garden Hall, 12 Crescent Road<br />Bengaluru, Karnataka</p>
-            <a href="https://maps.google.com" target="_blank" rel="noreferrer">View on map <span>↗</span></a>
+            <address>{venue.hall}<br />{venue.address}</address>
+            <a href={venueMapUrl} target="_blank" rel="noreferrer">
+              Get directions <span aria-hidden="true">↗</span>
+            </a>
           </article>
 
-          <article className="dua-card">
+          <article className="dua-card reveal">
             <span className="crescent" aria-hidden="true">☾</span>
-            <p className="dua-card__arabic">بَارَكَ اللَّهُ لَكُمَا وَبَارَكَ عَلَيْكُمَا وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ</p>
+            <p className="dua-card__arabic" lang="ar" dir="rtl">بَارَكَ اللَّهُ لَكُمَا وَبَارَكَ عَلَيْكُمَا وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ</p>
             <p>May Allah bless you both, shower His blessings upon you, and unite you in goodness.</p>
           </article>
 
           <footer>
-            <div className="monogram">S <i>&amp;</i> A</div>
+            <div className="monogram" aria-label={`${couple.bride} and ${couple.groom}`}>{couple.bride[0]} <i>&amp;</i> {couple.groom[0]}</div>
             <p>Your presence is the greatest gift.</p>
             <span>We can’t wait to celebrate with you</span>
           </footer>

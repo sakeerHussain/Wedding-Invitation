@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import "./globals.css";
 
@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
       title: "Safa & Ayaan — Wedding Invitation",
       description: "Join us as we begin our forever, with gratitude to Allah.",
-      images: [{ url: "/og.png", width: 1728, height: 910, alt: "Safa and Ayaan wedding invitation" }],
+      images: [{ url: "/og.png", width: 1536, height: 1024, alt: "Safa and Ayaan wedding invitation" }],
     },
     twitter: {
       card: "summary_large_image",
@@ -28,9 +28,17 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+export const viewport: Viewport = {
+  themeColor: "#f8f2e8",
+  colorScheme: "light",
+};
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="preload" as="image" href="/hero-watercolor-v2.png" fetchPriority="high" />
+      </head>
       <body>{children}</body>
     </html>
   );
