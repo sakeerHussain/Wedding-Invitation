@@ -10,18 +10,18 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     metadataBase,
-    title: "Safa & Ayaan — Wedding Invitation",
-    description: "With gratitude to Allah, Safa and Ayaan invite you to celebrate their Nikah and Walima.",
+    title: "Amina & Sakeer — Wedding Invitation",
+    description: "With gratitude to Allah, Amina and Sakeer invite you to celebrate their Nikah.",
     icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
     openGraph: {
       type: "website",
-      title: "Safa & Ayaan — Wedding Invitation",
+      title: "Amina & Sakeer — Wedding Invitation",
       description: "Join us as we begin our forever, with gratitude to Allah.",
-      images: [{ url: "/og.png", width: 1536, height: 1024, alt: "Safa and Ayaan wedding invitation" }],
+      images: [{ url: "/og.png", width: 1536, height: 1024, alt: "Amina and Sakeer wedding invitation" }],
     },
     twitter: {
       card: "summary_large_image",
-      title: "Safa & Ayaan — Wedding Invitation",
+      title: "Amina & Sakeer — Wedding Invitation",
       description: "Join us as we begin our forever, with gratitude to Allah.",
       images: ["/og.png"],
     },

@@ -4,6 +4,40 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Image from "next/image";
 import { invitationData, venueLabel, venueMapUrl, type WeddingEvent } from "./invitation-data";
 
+type InvitationMetaRowProps = {
+  icon: string;
+  label: string;
+  primary: string;
+  secondary?: string;
+};
+
+function OrnamentalDivider() {
+  return <div className="card-divider" aria-hidden="true"><span>✦</span></div>;
+}
+
+function CoupleNames({ bride, groom }: { bride: string; groom: string }) {
+  return (
+    <h1 className="couple-names">
+      <span>{bride}</span>
+      <small><i aria-hidden="true">❧</i><b>&amp;</b><i aria-hidden="true">❧</i></small>
+      <span>{groom}</span>
+    </h1>
+  );
+}
+
+function InvitationMetaRow({ icon, label, primary, secondary }: InvitationMetaRowProps) {
+  return (
+    <div className="invitation-meta-row">
+      <span className="invitation-meta-row__icon" aria-hidden="true">{icon}</span>
+      <div>
+        <strong>{label}</strong>
+        <p>{primary}</p>
+        {secondary && <small>{secondary}</small>}
+      </div>
+    </div>
+  );
+}
+
 const floralShowerPieces = Array.from({ length: 30 }, (_, index) => {
   const kind = index % 3;
   const baseDuration = kind === 0 ? 7.2 : kind === 1 ? 5.4 : 6.3;
@@ -18,17 +52,18 @@ const floralShowerPieces = Array.from({ length: 30 }, (_, index) => {
 });
 
 function downloadCalendar(event: WeddingEvent) {
+  const { bride, groom } = invitationData.couple;
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
-    "PRODID:-//Safa and Ayaan//Wedding Invitation//EN",
+    `PRODID:-//${bride} and ${groom}//Wedding Invitation//EN`,
     "CALSCALE:GREGORIAN",
     "BEGIN:VEVENT",
-    `UID:${event.title.toLowerCase()}-safa-ayaan-2026@wedding-invitation`,
+    `UID:${event.title.toLowerCase()}-${bride.toLowerCase()}-${groom.toLowerCase()}-2026@wedding-invitation`,
     `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "")}`,
     `DTSTART:${event.calendarStart}`,
     `DTEND:${event.calendarEnd}`,
-    `SUMMARY:${event.title} — Safa & Ayaan`,
+    `SUMMARY:${event.title} — ${bride} & ${groom}`,
     `LOCATION:${venueLabel.replace(/,/g, "\\,")}`,
     `DESCRIPTION:${event.note}`,
     "END:VEVENT",
@@ -37,7 +72,7 @@ function downloadCalendar(event: WeddingEvent) {
   const url = URL.createObjectURL(new Blob([lines.join("\r\n")], { type: "text/calendar;charset=utf-8" }));
   const link = document.createElement("a");
   link.href = url;
-  link.download = `safa-ayaan-${event.title.toLowerCase()}.ics`;
+  link.download = `${bride.toLowerCase()}-${groom.toLowerCase()}-${event.title.toLowerCase()}.ics`;
   link.click();
   window.setTimeout(() => URL.revokeObjectURL(url), 500);
 }
@@ -46,7 +81,7 @@ export default function Home() {
   const [opened, setOpened] = useState(false);
   const [detailsRevealed, setDetailsRevealed] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
-  const headingRef = useRef<HTMLHeadingElement>(null);
+  const headingRef = useRef<HTMLDivElement>(null);
   const showerRef = useRef<HTMLDivElement>(null);
   const showerAnimationsRef = useRef<Animation[]>([]);
   const showerPhaseRef = useRef(-1);
@@ -214,15 +249,25 @@ export default function Home() {
             <div className="arch">
               <div className="arch__inner">
                 <p className="bismillah" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيم</p>
-                <p className="eyebrow">Together with their families</p>
-                <div className="ornament" aria-hidden="true"><span>✦</span></div>
-                <h1 ref={headingRef} tabIndex={-1}><span>{couple.bride}</span><small>&amp;</small><span>{couple.groom}</span></h1>
-                <p className="invitation-copy">request the honour of your presence<br />as they begin their forever</p>
-                <div className="date-lockup card-secondary">
-                  <span>{events[0].day}</span><strong>{invitationData.ceremonyDate}</strong><span>{invitationData.ceremonyTime}</span>
+                <p className="card-family-line">Together with their families</p>
+                <div ref={headingRef} tabIndex={-1} className="couple-names-focus">
+                  <CoupleNames bride={couple.bride} groom={couple.groom} />
                 </div>
-                <p className="verse card-secondary">“{invitationData.verse}”</p>
-                <span className="verse-ref card-secondary">{invitationData.verseReference}</span>
+                <p className="invitation-copy">invite you to celebrate<br />the beginning of their beautiful journey.</p>
+                <OrnamentalDivider />
+
+                <div className="invitation-facts card-secondary" aria-hidden={!detailsRevealed}>
+                  <InvitationMetaRow icon="▦" label="Date" primary={`${events[0].day}, ${events[0].date}`} />
+                  <InvitationMetaRow icon="◷" label="Time" primary={events[0].time} />
+                  <InvitationMetaRow icon="⌖" label="Venue" primary={venue.name} secondary={`${venue.hall} · ${venue.address}`} />
+                </div>
+
+                <div className="card-blessing card-secondary" aria-hidden={!detailsRevealed}>
+                  <OrnamentalDivider />
+                  <p>Your presence will be<br />our greatest blessing.</p>
+                  <span aria-hidden="true">♥</span>
+                  <small>“{invitationData.verse}” · {invitationData.verseReference}</small>
+                </div>
               </div>
             </div>
             {opened && !detailsRevealed && (

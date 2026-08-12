@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Manrope:wght@400;500;600&family=Noto+Naskh+Arabic:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Great+Vibes&family=Manrope:wght@400;500;600&family=Noto+Naskh+Arabic:wght@500&display=swap');
 @import "tailwindcss";
 
 :root { --ivory:#f8f2e8; --paper:#fdfaf3; --green:#4c5848; --green-2:#66715e; --gold:#b99658; --blush:#d6aaa0; --ink:#4a4c43; }
@@ -56,22 +56,27 @@ button:focus-visible,a:focus-visible,[tabindex="-1"]:focus-visible { outline:3px
 .invitation--open .arch__inner > :nth-child(5) { animation-delay:1.57s; }
 .card-secondary { opacity:0; transform:translateY(18px) scale(.98); pointer-events:none; }
 .invitation--celebrating .card-secondary { animation:detailContentIn .75s cubic-bezier(.2,.75,.25,1) forwards; pointer-events:auto; }
-.invitation--celebrating .date-lockup { animation-delay:.1s; }
-.invitation--celebrating .verse { animation-delay:.24s; }
-.invitation--celebrating .verse-ref { animation-delay:.36s; }
+.invitation--celebrating .invitation-facts { animation-delay:.1s; }
+.invitation--celebrating .card-blessing { animation-delay:.3s; }
 .card-reveal-action { position:absolute; z-index:8; inset:0; padding:0; border:0; background:transparent; cursor:pointer; }
 .floral-shower { position:fixed; z-index:30; inset:0; overflow:hidden; pointer-events:none; contain:layout style paint; }
 .floral-piece { --piece-x:50vw; --piece-delay:0s; --piece-duration:6s; --piece-drift:20vw; --piece-rotation:0deg; position:absolute; top:-9vh; left:var(--piece-x); width:12px; height:20px; opacity:0; transform-origin:50% 20%; will-change:transform,opacity; backface-visibility:hidden; animation:floralFall var(--piece-duration) linear var(--piece-delay) infinite both; }
 .floral-piece--0 { border-radius:90% 10% 90% 10%; background:linear-gradient(145deg,#73806b,#aab49d); box-shadow:inset 1px 0 #f4ead8a0; }
 .floral-piece--1 { width:13px; height:13px; border-radius:70% 30% 65% 35%; background:linear-gradient(145deg,#e8c2b8,#f6ddd5); box-shadow:0 0 0 2px #fff7ed70; }
 .floral-piece--2 { width:10px; height:17px; border-radius:100% 0 100% 0; background:linear-gradient(145deg,#d9ba7b,#f0d9a8); }
-.bismillah { margin:0 0 1.3rem; font:500 clamp(1.15rem,2.2vw,1.65rem) "Noto Naskh Arabic",serif; color:var(--green); }
-.ornament { width:110px; display:flex; align-items:center; gap:10px; margin:1.2rem 0; color:var(--gold); }.ornament:before,.ornament:after { content:""; height:1px; flex:1; background:var(--gold); }.ornament span { font-size:.65rem; }
-h1 { margin:0; display:flex; flex-direction:column; font:500 clamp(3.7rem,7.5vh,6rem)/.68 "Cormorant Garamond",serif; color:var(--green); letter-spacing:-.055em; text-shadow:0 2px 16px #fffaf0; }
-h1 small { margin:.24em 0; color:var(--gold); font-size:.32em; font-style:italic; letter-spacing:0; }
-.invitation-copy { margin:2rem 0 1.4rem; font:italic 500 clamp(1rem,1.7vw,1.25rem)/1.6 "Cormorant Garamond",serif; color:#687269; }
-.date-lockup { display:flex; align-items:center; gap:1.1rem; color:var(--green); text-transform:uppercase; }.date-lockup strong { padding:0 1.1rem; border-left:1px solid #c1a36c;border-right:1px solid #c1a36c; font:500 clamp(1rem,2vw,1.3rem) "Cormorant Garamond",serif; letter-spacing:.14em; }.date-lockup span { font-size:.75rem; letter-spacing:.11em; }
-.verse { margin:2rem 0 .2rem; font:italic 500 .98rem "Cormorant Garamond",serif; color:#59645c; }.verse-ref { color:#8f6d35; font-size:.72rem; letter-spacing:.13em; text-transform:uppercase; }
+.bismillah { margin:0 0 .9rem; font:500 clamp(1.2rem,2.4vw,1.8rem) "Noto Naskh Arabic",serif; color:#9b742f; text-shadow:0 1px #fff8e9; }
+.card-family-line { margin:0; color:#5d4936; font:600 clamp(.65rem,1.1vw,.78rem)/1.4 "Cormorant Garamond",serif; letter-spacing:.14em; text-transform:uppercase; }
+.couple-names-focus { outline:none; }
+.couple-names { margin:.65rem 0 .45rem; display:flex; flex-direction:column; align-items:center; font:400 clamp(3.8rem,8.5vh,6.6rem)/.62 "Great Vibes","Cormorant Garamond",serif; color:#a47b31; letter-spacing:0; text-shadow:0 2px 1px #fff8e8,0 6px 18px #795d2420; }
+.couple-names small { min-width:9rem; margin:.2em 0 .18em; display:flex; align-items:center; justify-content:center; gap:.55rem; color:#a47b31; font:400 .3em/1 "Cormorant Garamond",serif; }
+.couple-names small i { font-style:normal; transform:rotate(20deg); }.couple-names small i:last-child { transform:scaleX(-1) rotate(20deg); }.couple-names small b { font-weight:400;font-style:italic; }
+.invitation-copy { margin:.55rem 0 .45rem; font:500 clamp(.9rem,1.55vw,1.08rem)/1.45 "Cormorant Garamond",serif; color:#5e4b3d; letter-spacing:.015em; }
+.card-divider { width:min(9rem,55%); display:flex; align-items:center; gap:.5rem; margin:.35rem auto; color:#a67b2c; }.card-divider:before,.card-divider:after { content:""; height:1px; flex:1; background:linear-gradient(90deg,transparent,#b58a3c); }.card-divider:after { background:linear-gradient(90deg,#b58a3c,transparent); }.card-divider span { font-size:.55rem; }
+.invitation-facts { width:min(27rem,94%); display:grid; gap:.4rem; margin:.2rem auto 0; }
+.invitation-meta-row { display:grid; grid-template-columns:2.2rem minmax(0,1fr); gap:.65rem; align-items:center; text-align:left; padding:.28rem 0; border-bottom:1px solid #b58a3c3d; }
+.invitation-meta-row:last-child { border-bottom:0; }.invitation-meta-row__icon { display:grid; place-items:center; width:2rem; aspect-ratio:1; color:#a67b2c; font:500 1.35rem "Cormorant Garamond",serif; }
+.invitation-meta-row strong { display:block; color:#735936; font:600 .65rem/1.2 "Cormorant Garamond",serif; letter-spacing:.14em; text-transform:uppercase; }.invitation-meta-row p { margin:.08rem 0 0; color:#4f4035; font:500 .86rem/1.22 "Cormorant Garamond",serif; }.invitation-meta-row small { display:block; color:#6c5b4d; font:500 .68rem/1.25 "Cormorant Garamond",serif; }
+.card-blessing { margin-top:.05rem; color:#5b493b; }.card-blessing .card-divider { margin:.2rem auto; }.card-blessing p { margin:.1rem 0; font:500 .9rem/1.25 "Cormorant Garamond",serif; letter-spacing:.035em; }.card-blessing>span { color:#b3883d; font-size:.65rem; }.card-blessing small { display:block; max-width:23rem; margin:.12rem auto 0; color:#786650; font:italic 500 .58rem/1.25 "Cormorant Garamond",serif; }
 
 .details { --details-gutter:max(5vw,1.5rem); position:relative; z-index:7; margin-top:-55vh; padding:11rem var(--details-gutter) 0; border-radius:48px 48px 0 0; background:linear-gradient(180deg,#f9f3e9c7 0,#faf6eee8 18rem,#f1e7daf5 100%); box-shadow:0 -28px 70px #67564226; overflow:hidden; }
 .details:before { content:""; position:absolute; z-index:1; width:480px; aspect-ratio:1; right:-260px; top:110px; border:1px solid #b38a4c45; border-radius:50%; box-shadow:0 0 0 28px #b38a4c12,0 0 0 55px #b38a4c0b; }
@@ -103,6 +108,17 @@ footer { margin:0 calc(0px - var(--details-gutter));padding:7rem 2rem 5rem;text-
   .hero-art-stage{filter:none;transition:opacity .05s linear}
   .floral-piece:nth-child(n+19){display:none}
   .floral-piece--1{box-shadow:none}
+  .bismillah{margin-bottom:.42rem;font-size:clamp(.88rem,3.8vw,1.05rem)}
+  .card-family-line{font-size:clamp(.52rem,2.25vw,.64rem);letter-spacing:.11em}
+  .couple-names{margin:.42rem 0 .28rem;font-size:clamp(3.25rem,14vw,4.65rem);line-height:.6}
+  .couple-names small{min-width:7rem;margin:.16em 0}
+  .invitation-copy{margin:.38rem 0 .28rem;font-size:clamp(.78rem,3.5vw,.94rem);line-height:1.32}
+  .card-divider{margin:.24rem auto}
+  .invitation-facts{width:96%;gap:.12rem;margin-top:.05rem}
+  .invitation-meta-row{grid-template-columns:1.7rem minmax(0,1fr);gap:.42rem;padding:.16rem 0}
+  .invitation-meta-row__icon{width:1.6rem;font-size:1.05rem}
+  .invitation-meta-row strong{font-size:.53rem}.invitation-meta-row p{font-size:.73rem}.invitation-meta-row small{font-size:.58rem}
+  .card-blessing p{font-size:.77rem}.card-blessing small{font-size:.51rem}
   .hero__fixed{
     min-height:100svh;
     height:100dvh;
@@ -253,7 +269,7 @@ footer { margin:0 calc(0px - var(--details-gutter));padding:7rem 2rem 5rem;text-
     translate:-50% 0;
   }
   .arch__inner{
-    padding-top:clamp(8rem,20dvh,11rem);
+    padding-top:clamp(6.5rem,16dvh,9rem);
     padding-inline:0;
   }
 }
