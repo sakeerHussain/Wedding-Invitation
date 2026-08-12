@@ -45,4 +45,8 @@ test("keeps invitation content centralized and accessible", async () => {
   assert.match(css, /max-aspect-ratio:2\/3/);
   assert.match(css, /\.hero-art-stage\{place-items:start center/);
   assert.match(css, /safe-area-inset-top/);
+  assert.match(css, /--details-gutter:clamp\(1rem,4\.5vw,1\.5rem\)/);
+  assert.match(css, /\.details:after\{[^}]*position:absolute/);
+  assert.match(css, /safe-area-inset-bottom/);
+  assert.match(css, /grid-template-columns:minmax\(0,1fr\)/);
 });
